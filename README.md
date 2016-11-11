@@ -23,7 +23,11 @@ java -jar vtodo-fat.jar
 ```
 
 ## Test
-open the browser and test the api.
+Open the browser and test the api.
+
+Or import the vtodo.yaml to Postman.
+
+**Remember to replace the host in the yaml file**
 
 ## API
-see [vtodo.yaml](./vtodo.yaml)
+See [vtodo.yaml](./vtodo.yaml)
