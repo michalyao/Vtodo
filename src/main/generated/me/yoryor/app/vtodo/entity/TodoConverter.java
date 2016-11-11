@@ -51,7 +51,6 @@ public class TodoConverter {
     if (obj.getId() != null) {
       json.put("id", obj.getId());
     }
-    json.put("incrementId", obj.getIncrementId());
     if (obj.getOrder() != null) {
       json.put("order", obj.getOrder());
     }
