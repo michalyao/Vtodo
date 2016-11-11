@@ -6,8 +6,14 @@ ENV VERTICEL_HOME /opt/verticles
 
 EXPOSE 8888
 
+ADD . /tmp/build
+
+RUN cd /tmp/build && chmod +x ./gradlew && ./gradlew
+
 COPY build/libs/$VERTICLE_FILE $VERTICLE_HOME/
 
 WORKDIR $VERTICLE_HOME
+
 ENTRYPOINT ["sh", "-c"]
+
 CMD ["java -jar $VERTICLE_FILE"]
