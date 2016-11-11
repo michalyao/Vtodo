@@ -18,7 +18,7 @@ cd Vtodo
 ``` shell
 cd build/libs
 
-# need redis service.
+# need redis service. see config/config.json for detail.
 java -jar vtodo-fat.jar
 ```
 
