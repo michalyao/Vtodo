@@ -1,20 +1,23 @@
-FROM java:8u77-jre-alpine
+FROM java
 
 ENV VERTICLE_FILE vtodo-fat.jar
 
 ENV VERTICEL_HOME /opt/verticles
 
+ENV BUILD_DIR /tmp/build/vtodo
+
 EXPOSE 8888
 
-ADD . /tmp/build/vtodo
+RUN mkdir -p /tmp/build/vtodo
+ADD ./ /tmp/build/vtodo
 
-RUN cd /tmp/build/vtodo
-RUN chmod +x ./gradlew
-RUN ./gradlew build
+WORKDIR $BUILD_DIR
+
+RUN cd /tmp/build/vtodo && chmod +x gradlew && ./gradlew build
 
 COPY build/libs/$VERTICLE_FILE $VERTICLE_HOME/
 
-WORKDIR $VERTICLE_HOME
+
 
 ENTRYPOINT ["sh", "-c"]
 
