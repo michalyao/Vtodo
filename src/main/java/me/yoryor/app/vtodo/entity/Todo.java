@@ -8,9 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @DataObject(generateConverter = true)
 public class Todo {
-
-  private static final AtomicInteger counter = new AtomicInteger(0);
-
   private String id;
   private String title;
   private Boolean completed;
@@ -57,10 +54,6 @@ public class Todo {
         getOrElse(todo.order, order),
         url
     );
-  }
-
-  public static AtomicInteger getCounter() {
-    return counter;
   }
 
   public String getId() {
