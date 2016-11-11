@@ -1,0 +1,127 @@
+swagger: '2.0'
+info:
+  title: Vtodo API
+  description: Simple backend for todo application.
+  version: "1.0.0"
+# change to your deploy host
+host: app.yoryor.me
+basePath: /api/v1
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /todos:
+    get:
+      summary:  List all todos.
+      tags:
+        - Todos
+      responses:
+        200:
+          description: Get todo list successful.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Todo'
+        503:
+          description: Service  unavailable.
+
+    post:
+      summary:  Create a todo.
+      tags:
+        - Todos
+      responses:
+        200:
+          description: Create a todo object successful.
+          schema:
+              $ref: '#/definitions/Todo'
+        400:
+          description: A bad request.
+        503:
+          description: Service unavailable.
+
+    delete:
+      summary:  Delete all todos.
+      tags:
+        - Todos
+      responses:
+        204:
+          description: Delete operation succeeded.
+        503:
+          description: Service unavailable.
+
+  /todos/{todoId}:
+    get:
+      summary: Get a todo by id.
+      tags:
+        - Todos
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          description: Id of todo.
+          type: string
+      responses:
+        200:
+          description: Get a todo successful.
+          schema:
+            $ref: '#/definitions/Todo'
+        404:
+          description: Not found.
+
+    delete:
+      summary: Delete a todo by id.
+      tags:
+        - Todos
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          description: Id of todo.
+          type: string
+      responses:
+        204:
+          description: Delete operation succeeded.
+        503:
+          description: Service unavailable.
+
+    patch:
+      summary: Update  a todo by id.
+      tags:
+        - Todos
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          description: Id of todo.
+          type: string
+      responses:
+        200:
+          description: Update A todo successful.
+          schema:
+            $ref: '#/definitions/Todo'
+        400:
+          description: Bad request.
+
+definitions:
+  Todo:
+    type: object
+    properties:
+      id:
+        type: string
+        description: UUID for todo.
+      title:
+        type: string
+        description: Title of todo.
+      completed:
+        type: boolean
+        description: Indicate todo completed or not.
+      order:
+        type: integer
+        description: Order of todo.
+      url:
+        type: string
+        description: URL of todo.
+
