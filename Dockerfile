@@ -6,9 +6,11 @@ ENV VERTICEL_HOME /opt/verticles
 
 EXPOSE 8888
 
-ADD . /tmp/build
+ADD . /tmp/build/vtodo
 
-RUN cd /tmp/build && chmod +x ./gradlew && ./gradlew
+RUN cd /tmp/build/vtodo
+RUN chmod +x ./gradlew
+RUN ./gradlew
 
 COPY build/libs/$VERTICLE_FILE $VERTICLE_HOME/
 
