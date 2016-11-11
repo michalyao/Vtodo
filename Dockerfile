@@ -9,7 +9,8 @@ EXPOSE 8888
 ADD . /tmp/build/vtodo
 
 RUN cd /tmp/build/vtodo
-RUN /bin/bash ./gradlew build
+RUN chmod +x ./gradlew
+RUN ./gradlew build
 
 COPY build/libs/$VERTICLE_FILE $VERTICLE_HOME/
 
