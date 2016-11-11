@@ -25,6 +25,8 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 public class TodoVerticle extends AbstractVerticle {
+
+  public static final String API_PREFIX = "/api/v1";
   /** API Route */
   public static final String API_GET = "/todos/:todoId";
   public static final String API_GET__ALL = "/todos";
@@ -59,12 +61,12 @@ public class TodoVerticle extends AbstractVerticle {
             .allowedHeaders(allowHeaders)
             .allowedMethods(allowMethods));
 
-    router.get(API_GET).handler(this::handleGet);
-    router.get(API_GET__ALL).handler(this::handleGetAll);
-    router.post(API_CREATE).handler(this::handleCreate);
-    router.patch(API_UPDATE).handler(this::handleUpdate);
-    router.delete(API_DELETE).handler(this::handleDelete);
-    router.delete(API_DELETE_ALL).handler(this::handleDeleteAll);
+    router.get(API_PREFIX + API_GET).handler(this::handleGet);
+    router.get(API_PREFIX + API_GET__ALL).handler(this::handleGetAll);
+    router.post(API_PREFIX + API_CREATE).handler(this::handleCreate);
+    router.patch(API_PREFIX + API_UPDATE).handler(this::handleUpdate);
+    router.delete(API_PREFIX + API_DELETE).handler(this::handleDelete);
+    router.delete(API_PREFIX + API_DELETE_ALL).handler(this::handleDeleteAll);
 
     vertx.createHttpServer()
         .requestHandler(router::accept)
