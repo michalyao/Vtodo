@@ -222,8 +222,8 @@ public class TodoVerticle extends AbstractVerticle {
   private void initRedis() {
     RedisOptions redisConfig = new RedisOptions();
     redisConfig
-        .setHost(config().getString("redis.host"))
-        .setPort(config().getInteger("redis.port"));
+        .setHost(config().getString("redis.host", "0.0.0.0"))
+        .setPort(config().getInteger("redis.port", 6379));
     service = new TodoServiceImpl(vertx, redisConfig);
     service.initDB().setHandler(res -> {
       if (res.failed()) {
