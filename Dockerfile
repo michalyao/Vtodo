@@ -1,0 +1,13 @@
+FROM java:8u77-jre-alpine
+
+ENV VERTICLE_FILE vtodo-fat.jar
+
+ENV VERTICEL_HOME /opt/verticles
+
+EXPOSE 8888
+
+COPY build/libs/$VERTICLE_FILE $VERTICLE_HOME/
+
+WORKDIR $VERTICLE_HOME
+ENTRYPOINT ["sh", "-c"]
+CMD ["java -jar $VERTICLE_FILE"]
