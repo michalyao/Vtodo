@@ -104,17 +104,20 @@ public class TodoVerticle extends AbstractVerticle {
       final Todo newTodo = new Todo(routingContext.getBodyAsString());
       if (todoID == null) {
         sendError(400, routingContext.response());
+        LOG.error("Create todo Failed.");
         return;
       }
       service.updateTodo(todoID, newTodo)
           .setHandler(resultHandler(routingContext, serviceResult -> {
             if (serviceResult == null) {
               notFound(routingContext);
+              LOG.error("Create todo Failed.");
             } else {
               final String jsonStr = Json.encodePrettily(serviceResult);
               routingContext.response()
                   .putHeader("content-type", "application/json")
                   .end(jsonStr);
+              LOG.info("Update todo Succeeded.");
             }
           }));
     } catch (Exception e) {
@@ -133,8 +136,10 @@ public class TodoVerticle extends AbstractVerticle {
               .setStatusCode(200)
               .putHeader("content-type", "application/json")
               .end(jsonStr);
+          LOG.info("Create todo Succeeded.");
         } else {
           serviceUnavailable(routingContext);
+          LOG.error("Create todo failed.");
         }
       }));
     } catch (EncodeException e) {
@@ -147,12 +152,14 @@ public class TodoVerticle extends AbstractVerticle {
       service.getTodoList().setHandler(resultHandler(routingContext, serviceResult -> {
         if (serviceResult == null || serviceResult.isEmpty()) {
           serviceUnavailable(routingContext);
+          LOG.error("Get todo list failed.");
         } else {
           final String jsonStr = Json.encodePrettily(serviceResult);
           routingContext.response()
               .setStatusCode(200)
               .putHeader("content-type", "application/json")
               .end(jsonStr);
+          LOG.info("Get todo list Succeeded.");
         }
       }));
     } catch (Exception e) {
@@ -165,17 +172,20 @@ public class TodoVerticle extends AbstractVerticle {
       String id = routingContext.request().getParam("todoId");
       if (id == null) {
         sendError(404, routingContext.response());
+        LOG.error("Get a todo failed.");
         return;
       }
       service.getTodoById(id).setHandler(resultHandler(routingContext, serviceResult -> {
         if (!serviceResult.isPresent()) {
           notFound(routingContext);
+          LOG.error("Get a todo failed.");
         } else {
           final String jsonStr = Json.encodePrettily(serviceResult.get());
           routingContext.response()
               .setStatusCode(200)
               .putHeader("content-type", "application/json")
               .end(jsonStr);
+          LOG.error("Get a todo Succeeded.");
         }
       }));
     } catch (Exception e) {
@@ -189,6 +199,7 @@ public class TodoVerticle extends AbstractVerticle {
       if (res.succeeded()) {
         if (res.result()) {
           routingContext.response().setStatusCode(204).end();
+          LOG.info("Delete Succeeded.");
         } else {
           serviceUnavailable(routingContext);
         }
@@ -243,7 +254,7 @@ public class TodoVerticle extends AbstractVerticle {
           .setHost(config().getString("redis.host", "0.0.0.0"))
           .setPort(config().getInteger("redis.port", 6379));
     }
-
+    LOG.info("redis config init:" + Json.encodePrettily(redisConfig));
     service = new TodoServiceImpl(vertx, redisConfig);
     service.initDB().setHandler(res -> {
       if (res.failed()) {
