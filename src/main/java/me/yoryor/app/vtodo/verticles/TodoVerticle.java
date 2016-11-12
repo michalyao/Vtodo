@@ -38,6 +38,7 @@ public class TodoVerticle extends AbstractVerticle {
   /** Daocloud Redis Service Env */
   public static final String DAOREDISADDR = "REDIS_PORT_6379_TCP_ADDR";
   public static final String DAOREDISPORT = "REDIS_PORT_6379_TCP_PORT";
+  public static final String DAOREDISPASSWD = "REDIS_PASSWORD";
 
 
   private static final Logger LOG = LoggerFactory.getLogger(TodoVerticle.class);
@@ -230,10 +231,13 @@ public class TodoVerticle extends AbstractVerticle {
     RedisOptions redisConfig = new RedisOptions();
     String daoHost = System.getenv(DAOREDISADDR);
     String daoPort = System.getenv(DAOREDISPORT);
+    String daoPwd = System.getenv(DAOREDISPASSWD);
     // Use daocloud internal service
     if (daoHost != null && daoPort != null) {
       redisConfig
-          .setHost(daoHost).setPort(Integer.parseInt(daoPort));
+          .setHost(daoHost)
+          .setPort(Integer.parseInt(daoPort))
+          .setAuth(daoPwd);
     } else {
       redisConfig
           .setHost(config().getString("redis.host", "0.0.0.0"))
