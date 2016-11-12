@@ -17,10 +17,7 @@ repositories {
 dependencies {
   compile "io.vertx:vertx-core:${vertxStack}"
   compile "io.vertx:vertx-web:${vertxStack}"
-  compile "io.vertx:vertx-rx-java:${vertxStack}"
-  compile "io.vertx:vertx-jdbc-client:${vertxStack}"
   compile "io.vertx:vertx-redis-client:${vertxStack}"
-  compile 'mysql:mysql-connector-java:6.0.2'
 
   compileOnly "io.vertx:vertx-codegen:${vertxStack}"
 
