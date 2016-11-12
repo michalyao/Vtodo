@@ -16,7 +16,7 @@ ADD ./ $BUILD_DIR
 
 WORKDIR $BUILD_DIR
 
-RUN cd $BUILD_DIR && chmod +x gradlew                 \
+RUN cd $BUILD_DIR && chmod +x gradlew; sync           \
     && ./gradlew build                                \
     && mv build/libs/vtodo-fat.jar $VERTICLE_HOME/    \
     && rm -rf $BUILD_DIR
