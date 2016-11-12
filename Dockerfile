@@ -1,5 +1,7 @@
 FROM java
 
+MAINTAINER michal<yaoyao0777@gmail.com>
+
 ENV VERTICLE_FILE vtodo-fat.jar
 
 ENV VERTICLE_HOME /opt/verticles
@@ -8,13 +10,16 @@ ENV BUILD_DIR /tmp/build/vtodo
 
 EXPOSE 8888
 
-RUN mkdir -p /tmp/build/vtodo && mkdir -p /opt/verticles
-ADD ./ /tmp/build/vtodo
+RUN mkdir -p $BUILD_DIR && mkdir -p $VERTICLE_HOME
+
+ADD ./ $BUILD_DIR
 
 WORKDIR $BUILD_DIR
 
-RUN cd /tmp/build/vtodo && chmod +x gradlew \
-    && ./gradlew build && mv build/libs/vtodo-fat.jar /opt/verticles/
+RUN cd $BUILD_DIR && chmod +x gradlew                 \
+    && ./gradlew build                                \
+    && mv build/libs/vtodo-fat.jar $VERTICLE_HOME     \
+    && rm -rf $BUILD_DIR
 
 ENTRYPOINT ["sh", "-c"]
 
