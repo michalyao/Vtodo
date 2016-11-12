@@ -11,7 +11,7 @@ git clone https://github.com/michalyao/Vtodo.git
 
 cd Vtodo
 
-./gradle
+./gradlew
 ```
 ## Run
 
