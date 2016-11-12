@@ -6,8 +6,6 @@ import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.redis.RedisClient;
 import io.vertx.redis.RedisOptions;
-import io.vertx.rx.java.ObservableFuture;
-import io.vertx.rx.java.RxHelper;
 import me.yoryor.app.vtodo.entity.Todo;
 import me.yoryor.app.vtodo.service.TodoService;
 
