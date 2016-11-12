@@ -35,6 +35,11 @@ public class TodoVerticle extends AbstractVerticle {
   public static final String API_DELETE = "/todos/:todoId";
   public static final String API_DELETE_ALL = "/todos";
 
+  /** Daocloud Redis Service Env */
+  public static final String DAOREDISADDR = "REDIS_PORT_6379_TCP_ADDR";
+  public static final String DAOREDISPORT = "REDIS_PORT_6379_TCP_PORT";
+
+
   private static final Logger LOG = LoggerFactory.getLogger(TodoVerticle.class);
   private TodoService service;
 
@@ -223,9 +228,18 @@ public class TodoVerticle extends AbstractVerticle {
 
   private void initRedis() {
     RedisOptions redisConfig = new RedisOptions();
-    redisConfig
-        .setHost(config().getString("redis.host", "0.0.0.0"))
-        .setPort(config().getInteger("redis.port", 6379));
+    String daoHost = System.getenv(DAOREDISADDR);
+    String daoPort = System.getenv(DAOREDISPORT);
+    // Use daocloud internal service
+    if (daoHost != null && daoPort != null) {
+      redisConfig
+          .setHost(daoHost).setPort(Integer.parseInt(daoPort));
+    } else {
+      redisConfig
+          .setHost(config().getString("redis.host", "0.0.0.0"))
+          .setPort(config().getInteger("redis.port", 6379));
+    }
+
     service = new TodoServiceImpl(vertx, redisConfig);
     service.initDB().setHandler(res -> {
       if (res.failed()) {
