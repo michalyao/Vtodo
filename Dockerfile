@@ -23,4 +23,4 @@ RUN cd $BUILD_DIR && chmod +x gradlew                 \
 
 ENTRYPOINT ["sh", "-c"]
 
-CMD ["java -jar $VERTICLE_HOME/VERTICLE_FILE"]
+CMD ["java -jar $VERTICLE_HOME/$VERTICLE_FILE"]
