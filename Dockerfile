@@ -18,7 +18,7 @@ WORKDIR $BUILD_DIR
 
 RUN cd $BUILD_DIR && chmod +x gradlew                 \
     && ./gradlew build                                \
-    && mv build/libs/vtodo-fat.jar $VERTICLE_HOME     \
+    && mv build/libs/vtodo-fat.jar $VERTICLE_HOME/    \
     && rm -rf $BUILD_DIR
 
 ENTRYPOINT ["sh", "-c"]
