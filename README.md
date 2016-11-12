@@ -31,3 +31,20 @@ Or import the vtodo.yaml to Postman.
 
 ## API
 See [vtodo.yaml](./vtodo.yaml)
+
+## Build With Docker
+
+#### Build DIY
+``` shell
+docker build -t "michalix/vtodo" .
+```
+
+#### Pull From Dockerhub
+``` shell
+docker pull michalix/vtodo # use redis default config.
+```
+
+#### Run Container
+``` shell
+docker run -p 8888:8888 -name vtodo michalix/vtodo
+```
