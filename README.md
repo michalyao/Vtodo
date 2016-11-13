@@ -46,5 +46,8 @@ docker pull michalix/vtodo # use redis default config.
 
 #### Run Container
 ``` shell
-docker run -p 8888:8888 -name vtodo michalix/vtodo
+## start redis service
+docker run -p 6379:6379 --name redis -d redis
+## link the container
+docker run -p 8888:8888 --link redis:db -name vtodo -d michalix/vtodo
 ```
