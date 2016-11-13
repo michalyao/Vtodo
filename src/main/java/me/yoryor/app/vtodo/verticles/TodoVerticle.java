@@ -75,7 +75,7 @@ public class TodoVerticle extends AbstractVerticle {
 
     vertx.createHttpServer()
         .requestHandler(router::accept)
-        .listen(config().getInteger("http.port", 8888), config().getString("http.host", "localhost"), ar -> {
+        .listen(config().getInteger("http.port", 8888), config().getString("http.host", "0.0.0.0"), ar -> {
           if (ar.succeeded()) {
             startFuture.complete();
           } else {
