@@ -18,6 +18,7 @@ dependencies {
   compile "io.vertx:vertx-core:${vertxStack}"
   compile "io.vertx:vertx-web:${vertxStack}"
   compile "io.vertx:vertx-redis-client:${vertxStack}"
+  compile "io.vertx:vertx-jdbc-client:${vertxStack}"
 
   compileOnly "io.vertx:vertx-codegen:${vertxStack}"
 
